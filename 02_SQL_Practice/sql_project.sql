@@ -212,21 +212,36 @@ Squash Court GUEST GUEST
 
 /* Q9: This time, produce the same result as in Q8, but using a subquery. */
 
-SELECT Facilities.name, full_name, Facilities.membercost*Bookings.slots as price
-	    
+SELECT fac_name, full_name, total_cost
 FROM 
-(SELECT Facilities.name,
-	CONCAT(Members.firstname, ' ', Members.surname) as full_name,
-        CASE WHEN b.memid = 0 THEN Facilities.guestcost * b.slots  
-             WHEN b.memid != 0 THEN Facilities.membercost * b.slots
-        END as total_cost 
+(SELECT f.name AS fac_name,
+	   CONCAT(m.firstname, ' ', m.surname) as full_name,
+       CASE WHEN b.memid = 0 THEN f.guestcost * b.slots  
+            WHEN b.memid != 0 THEN f.membercost * b.slots END as total_cost 
 FROM Bookings b
-LEFT JOIN Facilities ON b.facid = Facilities.facid
+LEFT JOIN Facilities f ON b.facid = f.facid
 LEFT JOIN Members m ON m.memid = b.memid
 WHERE LEFT(b.starttime, 10) = '2012-09-14'
 ) AS joined
 WHERE total_cost > 30
-ORDER BY price DESC
+ORDER BY 3 DESC
+
+Massage Room 2 GUEST GUEST
+320.0
+Massage Room 1 GUEST GUEST
+160.0
+Tennis Court 2 GUEST GUEST
+150.0
+Tennis Court 1 GUEST GUEST
+75.0
+Tennis Court 2 GUEST GUEST
+75.0
+Squash Court GUEST GUEST
+70.0
+Massage Room 1 Jemima Farrell
+39.6
+Squash Court GUEST GUEST
+35.0
 
 
 
@@ -247,3 +262,7 @@ LEFT JOIN Members m ON m.memid = b.memid
 GROUP BY 1
 HAVING revenue < 1000 
 ORDER BY 2 DESC
+
+Pool Table 270.0
+Snooker Table 240.0
+Table Tennis 180.0
