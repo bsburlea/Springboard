@@ -1,2 +1,0 @@
-python detect_faces.py -i iron_chic.jpg -p deploy.prototxt.txt -m res10_300x300_ssd_iter_140000.caffemodel
-python detect_faces.py -i 5-7.jpeg -p deploy.prototxt.txt -m res10_300x300_ssd_iter_140000.caffemodel
